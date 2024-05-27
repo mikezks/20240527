@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { BookingRoutingModule } from './booking-routing.module';
 import { TicketEffects } from './logic-flight/+state/effects';
 import { ticketFeature } from './logic-flight/+state/reducer';
-import { FlightBookingComponent, FlightEditComponent, FlightSearchComponent } from './feature-flight';
+import { FlightBookingComponent, FlightEditComponent } from './feature-flight';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UiFlightModule } from './ui-flight/ui-flight.module';
 
@@ -13,8 +13,7 @@ import { UiFlightModule } from './ui-flight/ui-flight.module';
 @NgModule({
   declarations: [
     FlightBookingComponent,
-    FlightEditComponent,
-    FlightSearchComponent
+    FlightEditComponent
   ],
   imports: [
     CommonModule,
