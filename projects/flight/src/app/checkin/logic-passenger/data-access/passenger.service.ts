@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { Passenger } from "../model/passenger";
 
 
@@ -32,7 +32,9 @@ export class PassengerService {
     const headers = new HttpHeaders()
       .set('Accept', 'application/json');
 
-    return this.http.get<Passenger[]>(url, { params, headers });
+    return this.http.get<Passenger[]>(url, { params, headers }).pipe(
+      tap(passengers => this.passengers = passengers)
+    );
   }
 
   findById(id: number): Observable<Passenger> {

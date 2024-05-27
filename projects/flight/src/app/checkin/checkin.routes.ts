@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { PassengerEditComponent, PassengerSearchComponent } from "./feature-passenger";
+import { passengerResolverConfig } from "./logic-passenger/data-access/passenger.resolver";
 
 
 export const CHECKIN_ROUTES: Routes = [
@@ -25,7 +26,8 @@ export const CHECKIN_ROUTES: Routes = [
           },
           {
             path: 'edit/:id',
-            component: PassengerEditComponent
+            component: PassengerEditComponent,
+            resolve: passengerResolverConfig
           }
         ]
       }
