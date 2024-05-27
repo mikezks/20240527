@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, signal, untracked } from '@angular/core';
+import { Component, computed, effect, signal, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Flight, FlightFilter, injectTicketsFacade } from '../../logic-flight';
 import { FlightCardComponent, FlightFilterComponent } from '../../ui-flight';
+import { SIGNAL } from '@angular/core/primitives/signals';
 
 
 @Component({
@@ -24,6 +25,16 @@ export class FlightSearchComponent {
     to: 'San Francisco',
     urgent: false
   });
+  protected numberOfFreeSeats = signal(5);
+
+  protected flightDetails = computed(() => {
+    if (this.numberOfFreeSeats() > 0) {
+      return 'Standby Seats available for flight '
+        + this.filter().from + ' to ' + this.filter().to;
+    }
+
+    return 'No standby-seats available';
+  });
   protected basket: Record<number, boolean> = {
     3: true,
     5: true
@@ -35,6 +46,40 @@ export class FlightSearchComponent {
       const filter = this.filter();
       untracked(() => console.log(filter));
     });
+
+    this.filter.update(
+      filter => ({
+        ...filter,
+        from: 'Barcelona'
+      })
+    );
+    console.log(this.filter().from);
+    this.filter.update(
+      filter => ({
+        ...filter,
+        from: 'Vienna'
+      })
+    );
+    console.log(this.filter().from);
+    this.filter.update(
+      filter => ({
+        ...filter,
+        from: 'Rome'
+      })
+    );
+    console.log(this.filter().from);
+    console.log(this.flightDetails[SIGNAL]);
+
+    /**
+     * 0
+     * even
+     * 1
+     * even
+     * odd
+     * 2
+     * odd
+     * even
+     * */
   }
 
   protected search(filter: FlightFilter): void {
