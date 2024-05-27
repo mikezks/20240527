@@ -1,12 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { BookingRoutingModule } from './booking-routing.module';
-import { TicketEffects } from './logic-flight/+state/effects';
-import { ticketFeature } from './logic-flight/+state/reducer';
-import { FlightBookingComponent, FlightEditComponent } from './feature-flight';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BookingRoutingModule } from './booking-routing.module';
+import { FlightBookingComponent, FlightEditComponent } from './feature-flight';
 import { UiFlightModule } from './ui-flight/ui-flight.module';
 
 
@@ -19,8 +15,6 @@ import { UiFlightModule } from './ui-flight/ui-flight.module';
     CommonModule,
     BookingRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forFeature(ticketFeature),
-    EffectsModule.forFeature([TicketEffects]),
     UiFlightModule
   ]
 })

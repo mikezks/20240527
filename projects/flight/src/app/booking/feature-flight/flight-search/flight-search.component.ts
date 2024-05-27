@@ -61,3 +61,5 @@ export class FlightSearchComponent {
     this.ticketsFacade.reset();
   }
 }
+
+export default FlightSearchComponent;
