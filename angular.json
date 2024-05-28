@@ -40,7 +40,12 @@
               "@angular-architects/paper-design/assets/css/bootstrap.css",
               "projects/flight/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "projects/flight/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "projects/flight/server.ts"
+            }
           },
           "configurations": {
             "production": {

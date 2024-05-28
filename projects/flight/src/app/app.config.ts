@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptors, withRequestsMadeViaParent } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors, withRequestsMadeViaParent } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
@@ -7,6 +7,7 @@ import { APP_ROUTES } from './app.routes';
 import { provideRouterFeature } from './shared/logic-router-state';
 import { provideConfigState } from './shared/util-config';
 import { authInterceptor } from './shared/logic-communication';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,12 +16,14 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(
       withInterceptors([authInterceptor]),
+      withFetch()
       // withRequestsMadeViaParent()
     ),
+    provideClientHydration(),
     provideStore(),
     provideEffects(),
     provideRouterFeature(),
-    provideConfigState('./assets/config.state.json')
+    provideConfigState('./assets/config.state.json'), provideClientHydration()
     /* {
       provide: FlightService,
       useClass: FlightService,

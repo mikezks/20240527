@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:flight-ssr": "node dist/flight-ssr/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "serve:ssr:flight": "node dist/flight/server/server.mjs"
   },
   "private": true,
   "dependencies": {
