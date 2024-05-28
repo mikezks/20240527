@@ -1,5 +1,6 @@
 import { DatePipe, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, model, output } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { injectCdBlink } from '../../../shared/util-cd-visualizer';
 import { Flight } from '../../logic-flight';
@@ -54,6 +55,11 @@ export class FlightCardComponent {
   item = input.required<Flight>();
   selected = model(false);
   delayTrigger = output<Flight>();
+  //outputFromObservable(of({ ...initialFlight, from: 'Hello World' }).pipe(delay(2_000)))
+
+  constructor() {
+    outputToObservable(this.delayTrigger).pipe();
+  }
 
   toggleSelection(): void {
     this.selected.update(selected => !selected);
