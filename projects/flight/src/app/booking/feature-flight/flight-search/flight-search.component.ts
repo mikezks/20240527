@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, Injector, ViewContainerRef, computed, effect, inject, runInInjectionContext, signal, untracked } from '@angular/core';
 import { SIGNAL } from '@angular/core/primitives/signals';
-import { outputToObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Flight, FlightFilter, initialFlight, injectTicketsFacade } from '../../logic-flight';
+import { Flight, FlightFilter, injectTicketsFacade } from '../../logic-flight';
 import { FlightCardComponent, FlightFilterComponent } from '../../ui-flight';
 import { FlightService } from './../../logic-flight/data-access/flight.service';
 
@@ -89,9 +88,9 @@ export class FlightSearchComponent {
      * even
      * */
 
-    const ref = this.viewRef.createComponent(FlightCardComponent);
+    /* const ref = this.viewRef.createComponent(FlightCardComponent);
     outputToObservable(ref.instance.delayTrigger).pipe().subscribe(console.log);
-    ref.setInput('item', initialFlight);
+    ref.setInput('item', initialFlight); */
 
     this.cdRef.markForCheck();
   }

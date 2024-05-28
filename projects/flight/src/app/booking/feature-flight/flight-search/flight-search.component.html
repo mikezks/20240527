@@ -10,6 +10,7 @@
       <app-flight-filter
         [filter]="filter()"
         (searchTrigger)="search($event)"
+        #flightFilter
         >
         <div *ngIf="flights.length" class="flight-filter-info">
           {{ flights.length }} flights found!
@@ -26,22 +27,33 @@
 
   <div class="row">
     <div *ngFor="let flight of flights" class="col-xs-12 col-sm-6 col-md-4">
-      <app-flight-card
-      [item]="flight"
-      [(selected)]="basket[flight.id]"
-      (delayTrigger)="delay($event)"
-    />
+      @defer (on interaction(flightFilter); prefetch on timer(2000)) {
+        <app-flight-card
+          [item]="flight"
+          [(selected)]="basket[flight.id]"
+          (delayTrigger)="delay($event)"
+        />
+      } @placeholder {
+        Result view will available on time.
+      }
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <h2 class="card-title">Basket</h2>
-    </div>
+  @defer (on timer(5000)) {
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Basket</h2>
+      </div>
 
-    <div class="card-body">
-      <pre>{{ basket | json }}</pre>
+      <div class="card-body">
+        <pre>{{ basket | json }}</pre>
+      </div>
     </div>
-  </div>
+  } @placeholder {
+    <p>
+      Basket not available yet.<br>
+      Please wait until it shows up in 5 seconds.
+    </p>
+  }
 
 </ng-container>
