@@ -25,19 +25,19 @@
     </div>
   </div>
 
-  <div class="row">
-    <div *ngFor="let flight of flights" class="col-xs-12 col-sm-6 col-md-4">
-      @defer (on interaction(flightFilter); prefetch on timer(2000)) {
-        <app-flight-card
-          [item]="flight"
-          [(selected)]="basket[flight.id]"
-          (delayTrigger)="delay($event)"
-        />
-      } @placeholder {
-        Result view will available on time.
-      }
+  @defer (on interaction(flightFilter)  ) {
+    <div class="row">
+      <div *ngFor="let flight of flights" class="col-xs-12 col-sm-6 col-md-4">
+          <app-flight-card
+            [item]="flight"
+            [(selected)]="basket[flight.id]"
+            (delayTrigger)="delay($event)"
+          />
+        </div>
     </div>
-  </div>
+  } @placeholder {
+    Result view will available on time.
+  }
 
   @defer (on timer(5000)) {
     <div class="card">

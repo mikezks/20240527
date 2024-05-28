@@ -22,6 +22,7 @@ import { injectApiUrl } from '../../util-config';
           <li>Performance</li>
           <li>... and much more!</li>
         </ul>
+        <p>{{ apiUrl }}</p>
       </div>
     </div>
   `,
@@ -32,7 +33,7 @@ import { injectApiUrl } from '../../util-config';
   `]
 })
 export class HomeComponent {
-  private apiUrl = injectApiUrl();
+  protected apiUrl = injectApiUrl();
 
   constructor() {
     console.log(this.apiUrl);
