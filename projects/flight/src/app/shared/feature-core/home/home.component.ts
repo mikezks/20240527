@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { injectApiUrl } from '../../util-config';
 
 
 @Component({
@@ -31,4 +32,9 @@ import { Component } from '@angular/core';
   `]
 })
 export class HomeComponent {
+  private apiUrl = injectApiUrl();
+
+  constructor() {
+    console.log(this.apiUrl);
+  }
 }
