@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(
       withInterceptors([authInterceptor]),
-      withRequestsMadeViaParent()
+      // withRequestsMadeViaParent()
     ),
     provideStore(),
     provideEffects(),
