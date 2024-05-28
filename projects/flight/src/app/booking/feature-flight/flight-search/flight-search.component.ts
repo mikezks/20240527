@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, signal, untracked } from '@angular/core';
+import { Component, Injector, computed, effect, inject, runInInjectionContext, signal, untracked } from '@angular/core';
+import { SIGNAL } from '@angular/core/primitives/signals';
 import { FormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Flight, FlightFilter, injectTicketsFacade } from '../../logic-flight';
 import { FlightCardComponent, FlightFilterComponent } from '../../ui-flight';
-import { SIGNAL } from '@angular/core/primitives/signals';
+import { FlightService } from './../../logic-flight/data-access/flight.service';
 
 
 @Component({
@@ -19,6 +21,9 @@ import { SIGNAL } from '@angular/core/primitives/signals';
 })
 export class FlightSearchComponent {
   private ticketsFacade = injectTicketsFacade();
+  private flightState = injectFlightState({ delayed: true });
+  private injector = inject(Injector);
+  // flightService = inject(FlightService) as unknown as FlightService[];
 
   protected filter = signal<FlightFilter>({
     from: 'London',
@@ -83,6 +88,15 @@ export class FlightSearchComponent {
   }
 
   protected search(filter: FlightFilter): void {
+    // Would trigger an injection context error
+    // injectFlightState({ delayed: true });
+    // inject(FlightService, {});
+
+    runInInjectionContext(
+      this.injector,
+      () => injectFlightState({ delayed: true })
+    );
+
     this.filter.set(filter);
 
     if (!this.filter().from || !this.filter().to) {
@@ -109,4 +123,13 @@ export class FlightSearchComponent {
   protected reset(): void {
     this.ticketsFacade.reset();
   }
+}
+
+
+function injectFlightState(config: { delayed: boolean }) {
+  const store = inject(Store);
+  const flights = inject(FlightService).flights
+    .filter(flight => flight.delayed === config.delayed);
+
+  return { store, flights };
 }
