@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Flight } from '../../logic-flight';
 
 
@@ -38,11 +38,15 @@ import { Flight } from '../../logic-flight';
     </div>
   `
 })
-export class FlightCardComponent {
+export class FlightCardComponent implements OnInit, OnDestroy {
   @Input() item?: Flight;
   @Input() selected = false;
   @Output() selectedChange = new EventEmitter<boolean>();
   @Output() delayTrigger = new EventEmitter<Flight>();
+
+  ngOnInit(): void {
+    console.log('Flight Card INIT', this.item?.id);
+  }
 
   toggleSelection(): void {
     this.selected = !this.selected;
@@ -51,5 +55,9 @@ export class FlightCardComponent {
 
   delay(): void {
     this.delayTrigger.emit(this.item);
+  }
+
+  ngOnDestroy(): void {
+    console.log('Flight Card DESTROY', this.item?.id);
   }
 }
