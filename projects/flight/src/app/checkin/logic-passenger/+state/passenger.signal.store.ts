@@ -1,5 +1,5 @@
-import { inject } from '@angular/core';
-import { patchState, signalStore, type, withMethods } from '@ngrx/signals';
+import { computed, inject } from '@angular/core';
+import { patchState, signalStore, type, withComputed, withMethods } from '@ngrx/signals';
 import { setAllEntities, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
@@ -11,6 +11,12 @@ export const PassengerStore = signalStore(
   { providedIn: 'root' },
   // State
   withEntities({ entity: type<Passenger>(), collection: 'passenger' }),
+  // Selectors
+  withComputed(store => ({
+    lastAddedPassenger: computed(
+      () => store.passengerEntities().slice(-1)[0]
+    )
+  })),
   // Updater
   withMethods(store => ({
     setPassengers: (state: { passengers: Passenger[] }) => patchState(store,
